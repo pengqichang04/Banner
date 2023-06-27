@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .banner {
+            margin: 10px auto;
+            position: relative;
+            width: 1200px;
+            height: 800px;
+
+        }
+
+        .img {
+            position: absolute;
+            height: 800px;
+            width: 1200px;
+        }
+
+        #dian {
+            height: 40px;
+            width: 200px;
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            margin-left: -100px;
+            z-index: 100;
+        }
+
+        .po {
+            height: 40px;
+            width: 40px;
+            float: left;
+            border: 1px solid black;
+            border-radius: 50%;
+            margin: 0px 10px;
+        }
+
+        .button {
+            height: 40px;
+            width: 40px;
+            position: absolute;
+            top: 50%;
+            margin-top: -20px;
+            z-index: 100;
+
+        }
+
+        #button-left {
+            left: 5px;
+        }
+
+        #button-right {
+            right: 5px;
+        }
+
+        .in {
+            z-index: 50;
+        }
+
+        .po1 {
+            background: yellow;
+            z-index: 50;
+        }
+
+    </style>
+</head>
+<body>
+<div class="banner" id="banner">
+    <div class="banner-img">
+        <img src="image/image1.jpeg" class="img in">
+        <img src="image/image2.jpeg" class="img">
+        <img src="image/image2.jpeg@base@tag=imgScale&F=webp&h=1080&q=90&w=2560" class="img">
+
+        <button class="button" id="button-left"><</button>
+        <button class="button" id="button-right">></button>
+
+        <div id="dian">
+            <div class="po po1" data="0"></div>
+            <div class="po" data="1"></div>
+            <div class="po" data="2"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var index = 0;
+    var time = 0;
+    var img = document.getElementsByClassName("img");
+    var dian = document.getElementById("dian").getElementsByTagName("div");
+    var left = document.getElementById("button-left");
+    var right = document.getElementById("button-right");
+
+    function Clear() {
+        for (var i = 0; i < img.length; i++) {
+            img[i].className = "img";
+        }
+        for (var i = 0; i < dian.length; i++) {
+            dian[i].className = "po";
+        }
+    }
+
+    function GoIndex() {
+        Clear();
+        img[index].className = "img in";
+        dian[index].className = "po po1";
+
+    }
+
+    function GoNext() {
+        if (index == 2) {
+            index = 0;
+        } else index++;
+        GoIndex();
+    }
+
+    function GoUp() {
+        if (index == 0) {
+            index = 2;
+        } else index--;
+        GoIndex();
+    }
+
+    left.onclick = function () {
+        time = 0;
+        GoUp();
+    }
+    right.onclick = function () {
+        time = 0;
+        GoNext();
+    }
+    setInterval(function () {
+        time++;
+        if (time == 40) {
+            GoNext();
+            time = 0;
+        }
+    }, 100);
+    for (var i = 0; i < dian.length; i++) {
+        dian[i].onclick = function () {
+            var a = this.getAttribute("data");
+            index = a;
+            GoIndex();
+            time = 0;
+        }
+
+
+    }
+
+
+</script>
+
+</body>
+</html>
